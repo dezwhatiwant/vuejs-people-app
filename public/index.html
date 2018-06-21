@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div id="vue-app">
@@ -27,9 +28,10 @@
     </div>
     <br>
     <div v-for="person in people">
-      <h2>{{ person.name }}
+      <h2 v-on:click="toggleBio(person)">{{ person.name }}
       <button v-on:click="deletePerson(person)">X</button></h2>
-      <h5>{{ person.bio }}</h5>
+      <h5 v-if="person.bioVisible">{{ person.bio }}</h5>
+
     </div>
     <br>
     <div>

@@ -4,27 +4,20 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      people: [
-        { name: "Bob Dole",
-          bio: "Has no soul",
-          bioVisible: true
-        },
-        { name: "Billy Bob",
-          bio: "Has been robbed",
-          bioVisible: true
-        },
-        { name: "Candy Cigarettes",
-          bio: "Look and taste like the real thing",
-          bioVisible: true
-        }
-      ],
+      people: [],
       newPerson: {
         name: "",
         bio: ""
       }
     };
   },
-  created: function() {},
+  created: function() {
+    axios
+      .get('/api/people')
+      .then(function(response) {
+        this.people = response.data;
+      }.bind(this));
+  },
   methods: {
     addPerson: function() {
       var newPersonInfo = {
@@ -46,6 +39,10 @@ var HomePage = {
     deletePerson: function(inputPerson) {
       var indexOfPerson = this.people.indexOf(inputPerson);
       this.people.splice(indexOfPerson, 1);
+    },
+    toggleBio: function(inputPerson) {
+      inputPerson.bioVisible = !inputPerson.bioVisible;
+      //Safety if line above does not work due to vue this.$set(inputPerson, "bioVisible", !(inputPerson.bioVisible));
     }
   },
   computed: {}
