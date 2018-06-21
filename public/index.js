@@ -20,16 +20,20 @@ var HomePage = {
   },
   methods: {
     addPerson: function() {
-      var newPersonInfo = {
-        name: this.newPerson.name,
-        bio: this.newPerson.bio,
-        bioVisible: true
-      };
+      
+      if ( this.newPerson.bio && this.newPerson.name ) {
+        var clientParams = {
+          name: this.newPerson.name,
+          bio: this.newPerson.bio,
+        };
 
-      if (this.newPerson.bio && this.newPerson.name) {
-        this.people.push(newPersonInfo);
-        this.newPerson.name = "";
-        this.newPerson.bio = "";
+        axios
+          .post('/api/people', clientParams)
+          .then(function(response) {
+            this.people.push(response.data);
+            this.newPerson.name = "";
+            this.newPerson.bio = "";
+          }.bind(this));
       }
     },
     countPeople: function() {
