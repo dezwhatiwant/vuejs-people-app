@@ -8,7 +8,8 @@ var HomePage = {
       newPerson: {
         name: "",
         bio: ""
-      }
+      },
+      errors: []
     };
   },
   created: function() {
@@ -33,6 +34,10 @@ var HomePage = {
             this.people.push(response.data);
             this.newPerson.name = "";
             this.newPerson.bio = "";
+            this.errors = [];
+          }.bind(this))
+          .catch(function(error) {
+            this.errors = error.response.data.errors;
           }.bind(this));
       }
     },
