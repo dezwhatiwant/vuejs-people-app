@@ -11,7 +11,8 @@ var HomePage = {
       },
       errors: [],
       nameFilter: "",
-      bioFilter: ""
+      bioFilter: "",
+      sortAttribute: "name"
     };
   },
   created: function() {
@@ -54,9 +55,21 @@ var HomePage = {
       var validName = inputPerson.name.toLowerCase().includes(this.nameFilter.toLowerCase());
       var validBio = inputPerson.bio.toLowerCase().includes(this.bioFilter.toLowerCase());
       return validName && validBio;
+    },
+    setAttribute: function(inputAttribute) {
+      this.sortAttribute = !this.sortAttribute;
+      this.sortAttribute = inputAttribute;
     }
   },
-  computed: {}
+  computed: {
+    sortedPeople: function() {
+      return this.people.sort(function(person1, person2) {
+        var lowerAttribute1 = person1[this.sortAttribute].toLowerCase();
+        var lowerAttribute2 = person2[this.sortAttribute].toLowerCase();
+        return lowerAttribute1.localeCompare(lowerAttribute2);
+      }.bind(this));
+    }
+  }
 };
 
 var router = new VueRouter({
@@ -70,6 +83,8 @@ var app = new Vue({
   el: "#vue-app",
   router: router
 });
+
+
 
 
 
