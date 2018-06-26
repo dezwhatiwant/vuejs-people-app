@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="vue-app">
-
+    
     <router-view></router-view>
 
   </div>
@@ -33,18 +33,29 @@
       Bio: <input v-model="newPerson.bio">
       <button v-on:click="addPerson()">Add</button>
     </div>
-    <br>
-    <div v-for="person in people">
-      <h2 v-on:click="toggleBio(person)">{{ person.name }}
-      <button v-on:click="deletePerson(person)">X</button></h2>
-      <h5 v-if="person.bioVisible">{{ person.bio }}</h5>
-
+    
+    <div>
+      Search Name <input v-model="nameFilter" list="names">
+      <datalist id="names">
+        <option v-for="person in people">{{ person.name }}</option>
+      </datalist>
+    </div>
+    <div>
+      Search Bio <input v-model="bioFilter">
     </div>
     <br>
-    <div>
-      <button v-on:click="countPeople()">Find Number of People</button>
-      <p id="total"></p>
 
+    <div>
+      <div v-for="person in people" v-if="isValidPerson(person)">
+        <h2 v-on:click="toggleBio(person)">{{ person.name }}
+        <button v-on:click="deletePerson(person)">X</button></h2>
+        <h5 v-if="person.bioVisible">{{ person.bio }}</h5>
+      </div>
+    </div>
+
+    <br>
+
+    <div>
       <h5># of people = {{ people.length }}</h5>
     </div>
 

@@ -7,9 +7,11 @@ var HomePage = {
       people: [],
       newPerson: {
         name: "",
-        bio: ""
+        bio: "",
       },
-      errors: []
+      errors: [],
+      nameFilter: "",
+      bioFilter: ""
     };
   },
   created: function() {
@@ -41,17 +43,17 @@ var HomePage = {
           }.bind(this));
       }
     },
-    countPeople: function() {
-      var totalPeople = this.people.length;
-      document.getElementById("total").innerHTML = this.people.length;
-    },
     deletePerson: function(inputPerson) {
       var indexOfPerson = this.people.indexOf(inputPerson);
       this.people.splice(indexOfPerson, 1);
     },
     toggleBio: function(inputPerson) {
       inputPerson.bioVisible = !inputPerson.bioVisible;
-      //Safety if line above does not work due to vue this.$set(inputPerson, "bioVisible", !(inputPerson.bioVisible));
+    },
+    isValidPerson: function(inputPerson) {
+      var validName = inputPerson.name.toLowerCase().includes(this.nameFilter.toLowerCase());
+      var validBio = inputPerson.bio.toLowerCase().includes(this.bioFilter.toLowerCase());
+      return validName && validBio;
     }
   },
   computed: {}
@@ -68,3 +70,18 @@ var app = new Vue({
   el: "#vue-app",
   router: router
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
